@@ -5,6 +5,37 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>USA Copier Movers | Nationwide Copier & Office Equipment Shipping</title>
 <meta name="description" content="USA Copier Movers specializes in safe, insured, nationwide transport of copiers, printers, and office equipment. Free quotes, white-glove handling, door-to-door service.">
+<link rel="canonical" href="https://www.usacopiermovers.com/">
+<meta name="robots" content="index, follow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230b2545'/%3E%3Ctext x='32' y='42' font-size='26' font-family='Arial,sans-serif' font-weight='900' fill='%23f39c12' text-anchor='middle'%3ECM%3C/text%3E%3C/svg%3E">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="USA Copier Movers">
+<meta property="og:title" content="USA Copier Movers | Nationwide Copier & Office Equipment Shipping">
+<meta property="og:description" content="Insured, nationwide transport of copiers, printers, and office equipment. Free quotes, white-glove handling, door-to-door service.">
+<meta property="og:url" content="https://www.usacopiermovers.com/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="USA Copier Movers | Nationwide Copier & Office Equipment Shipping">
+<meta name="twitter:description" content="Insured, nationwide transport of copiers, printers, and office equipment. Free quotes, white-glove handling, door-to-door service.">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MovingCompany",
+  "name": "USA Copier Movers",
+  "url": "https://www.usacopiermovers.com/",
+  "telephone": "+1-866-216-7742",
+  "email": "copierleasereturn@highvalueproductshipping.com",
+  "areaServed": "United States",
+  "description": "Nationwide, insured shipping and logistics for copiers, printers, and office equipment, including quarterly copier lease returns for all major brands.",
+  "makesOffer": [
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Copier Shipping" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Copier Lease Return Logistics" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Office Equipment Relocation" } }
+  ]
+}
+</script>
 <style>
   :root{
     --navy:#0b2545;
@@ -322,6 +353,7 @@
       <a href="#services">Services</a>
       <a href="#how-it-works">How It Works</a>
       <a href="#equipment">Equipment We Ship</a>
+      <a href="/blog/">Blog</a>
       <a href="#contact">Contact</a>
     </nav>
     <a href="tel:8662167742" class="nav-cta">Call (866) 216-7742</a>
@@ -342,7 +374,7 @@
     <div class="hero-card" id="quote">
       <h3>Request a Free Shipping Quote</h3>
       <p class="sub">Tell us about your shipment — we'll call you back with a price.</p>
-      <form action="mailto:neitaprof@gmail.com" method="post" enctype="text/plain">
+      <form id="quoteForm">
         <div class="field">
           <label>Full Name</label>
           <input type="text" name="name" placeholder="Jane Smith" required>
@@ -357,9 +389,10 @@
         </div>
         <div class="field">
           <label>Equipment Details</label>
-          <textarea name="details" placeholder="Copier make/model, quantity, size..."></textarea>
+          <textarea name="details" placeholder="Copier make/model, quantity, size... (mention if this is a quarterly lease return)"></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Request Quote</button>
+        <button type="submit" class="btn btn-primary" id="quoteSubmitBtn">Request Quote</button>
+        <p id="quoteStatus" role="status" style="margin-top:12px;font-size:.88rem;font-weight:600;"></p>
       </form>
     </div>
   </div>
@@ -477,6 +510,42 @@
   </div>
 </section>
 
+<section class="section" id="faq">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Common Questions</span>
+      <h2>Copier Shipping &amp; Lease Return FAQ</h2>
+      <p>Answers to what customers ask us most, including quarterly copier lease returns.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <h3>How much does it cost to ship a copier?</h3>
+        <p>Cost depends on distance, weight, and crating needs. Call (866) 216-7742 or request a free quote above and we'll give you a firm price before you book.</p>
+      </div>
+      <div class="service-card">
+        <h3>Do you handle quarterly copier lease returns?</h3>
+        <p>Yes — we specialize in scheduled, recurring lease-return shipments for dealers and end users. Email <a href="mailto:copierleasereturn@highvalueproductshipping.com" style="color:var(--navy-2);font-weight:700;">copierleasereturn@highvalueproductshipping.com</a> to set up a standing quarterly pickup.</p>
+      </div>
+      <div class="service-card">
+        <h3>Which copier brands can you ship?</h3>
+        <p>All major brands — Canon, Xerox, Ricoh, Konica Minolta, Sharp, Kyocera, Toshiba, HP, and Lexmark — in any size, from desktop units to production printers.</p>
+      </div>
+      <div class="service-card">
+        <h3>Do you provide packaging and crating?</h3>
+        <p>Yes. Every machine is wrapped, padded, and secured before it leaves the building, and crated when the equipment or lease return terms require it.</p>
+      </div>
+      <div class="service-card">
+        <h3>Can you deliver inside the building?</h3>
+        <p>Yes, white-glove liftgate and inside-placement delivery is available for offices without a loading dock.</p>
+      </div>
+      <div class="service-card">
+        <h3>Do you work with leasing companies and dealers?</h3>
+        <p>Yes — we support copier dealers and leasing companies with ongoing, multi-unit shipping schedules, not just one-time moves.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="cta-band">
   <div class="wrap">
     <h2>Ready to Ship Your Copier?</h2>
@@ -506,6 +575,8 @@
         <ul>
           <li><a href="#how-it-works">How It Works</a></li>
           <li><a href="#equipment">Equipment We Ship</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="/blog/">Blog</a></li>
           <li><a href="#quote">Get a Quote</a></li>
         </ul>
       </div>
@@ -513,7 +584,8 @@
         <h4>Contact</h4>
         <ul>
           <li><a href="tel:8662167742">(866) 216-7742</a></li>
-          <li><a href="mailto:neitaprof@gmail.com">neitaprof@gmail.com</a></li>
+          <li><a href="mailto:copierleasereturn@highvalueproductshipping.com">copierleasereturn@highvalueproductshipping.com</a></li>
+          <li>Lease returns &amp; quotes</li>
           <li>Serving all 50 states</li>
         </ul>
       </div>
@@ -525,6 +597,44 @@
   </div>
 </footer>
 
-<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+const quoteForm = document.getElementById('quoteForm');
+const quoteStatus = document.getElementById('quoteStatus');
+const quoteSubmitBtn = document.getElementById('quoteSubmitBtn');
+
+quoteForm.addEventListener('submit', async function(e){
+  e.preventDefault();
+  quoteSubmitBtn.disabled = true;
+  quoteStatus.style.color = 'var(--muted)';
+  quoteStatus.textContent = 'Sending your request...';
+
+  const data = Object.fromEntries(new FormData(quoteForm).entries());
+
+  try {
+    const res = await fetch('/api/quote', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    const json = await res.json().catch(function(){ return {}; });
+
+    if (res.ok) {
+      quoteStatus.style.color = '#1a7f37';
+      quoteStatus.textContent = "Thanks! Your quote request was sent — we'll call you shortly.";
+      quoteForm.reset();
+    } else {
+      quoteStatus.style.color = '#c0392b';
+      quoteStatus.textContent = json.error || 'Something went wrong. Please call (866) 216-7742 instead.';
+    }
+  } catch (err) {
+    quoteStatus.style.color = '#c0392b';
+    quoteStatus.textContent = 'Something went wrong. Please call (866) 216-7742 instead.';
+  } finally {
+    quoteSubmitBtn.disabled = false;
+  }
+});
+</script>
 </body>
 </html>
