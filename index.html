@@ -39,10 +39,10 @@
 </script>
 <style>
   :root{
-    --navy:#0b2545;
-    --navy-2:#133e75;
-    --accent:#f39c12;
-    --accent-dark:#d3830a;
+    --navy:#0a3161;
+    --navy-2:#14548c;
+    --accent:#b22234;
+    --accent-dark:#8f1d29;
     --gray-bg:#f5f7fa;
     --text:#1e2a36;
     --muted:#5b6b7b;
@@ -58,6 +58,27 @@
   a{color:inherit;text-decoration:none;}
   img{max-width:100%;display:block;}
   .wrap{max-width:1140px;margin:0 auto;padding:0 20px;}
+
+  /* USA flag ribbon */
+  .flag-stripe{
+    height:6px;
+    background:repeating-linear-gradient(90deg, var(--accent) 0 36px, #ffffff 36px 72px);
+  }
+  .usa-ribbon{
+    background:var(--navy);
+    color:var(--white);
+    text-align:center;
+    padding:9px 10px;
+    font-size:.78rem;
+    font-weight:700;
+    letter-spacing:.3px;
+  }
+  .usa-ribbon .star-glyph{color:#f4c430;}
+
+  /* Star row divider */
+  .star-row{display:flex;gap:10px;justify-content:center;align-items:center;color:var(--accent);margin:6px 0 26px;flex-wrap:wrap;}
+  .star-row svg{width:15px;height:15px;}
+  .star-row.on-dark{color:#f4c430;}
 
   /* Header */
   header{
@@ -111,11 +132,30 @@
 
   /* Hero */
   .hero{
+    position:relative;
+    overflow:hidden;
     background:linear-gradient(135deg,var(--navy) 0%,var(--navy-2) 100%);
     color:var(--white);
     padding:80px 0 90px;
   }
+  .hero::before{
+    content:"";
+    position:absolute;inset:0;
+    background-image:radial-gradient(circle, rgba(255,255,255,.55) 1.4px, transparent 1.6px);
+    background-size:42px 42px;
+    opacity:.3;
+    pointer-events:none;
+  }
+  .hero::after{
+    content:"";
+    position:absolute;right:-90px;top:-90px;
+    width:340px;height:340px;
+    background:radial-gradient(circle, rgba(178,34,52,.35) 0%, transparent 70%);
+    pointer-events:none;
+  }
   .hero-grid{
+    position:relative;
+    z-index:1;
     display:grid;
     grid-template-columns:1.1fr .9fr;
     gap:40px;
@@ -291,6 +331,39 @@
   .stat h3{font-size:2.2rem;color:var(--navy);font-weight:900;}
   .stat p{color:var(--muted);font-size:.9rem;font-weight:600;margin-top:6px;}
 
+  /* Coverage map */
+  .coverage{background:var(--navy);}
+  .coverage .section-head h2{color:var(--white);}
+  .coverage .section-head p{color:#c3cedb;}
+  .coverage .section-head .eyebrow{background:rgba(255,255,255,.12);color:#f4c430;}
+  .map-graphic{
+    max-width:640px;
+    margin:0 auto;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:16px;
+    padding:20px;
+  }
+  .map-graphic svg{width:100%;height:auto;display:block;}
+  .map-chips{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:12px;
+    margin-top:26px;
+  }
+  .map-chip{
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.2);
+    color:var(--white);
+    font-weight:700;
+    font-size:.85rem;
+    padding:9px 18px;
+    border-radius:30px;
+    display:flex;align-items:center;gap:7px;
+  }
+  .map-chip .dot-red{width:7px;height:7px;border-radius:50%;background:var(--accent);flex-shrink:0;}
+
   /* CTA band */
   .cta-band{
     background:linear-gradient(135deg,var(--accent) 0%, var(--accent-dark) 100%);
@@ -343,6 +416,9 @@
 </style>
 </head>
 <body>
+
+<div class="flag-stripe"></div>
+<div class="usa-ribbon">★ American-Owned &amp; Operated <span class="star-glyph">★</span> Proudly Serving All 50 States &amp; Shipping Worldwide <span class="star-glyph">★</span></div>
 
 <header>
   <div class="nav">
@@ -533,6 +609,111 @@
     <div class="stat"><h3>Global</h3><p>International Shipping Available</p></div>
     <div class="stat"><h3>100%</h3><p>Insured Shipments</p></div>
     <div class="stat"><h3>866-216-7742</h3><p>One Number to Call</p></div>
+  </div>
+</section>
+
+<section class="section coverage" id="coverage">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Coast to Coast &amp; Beyond</span>
+      <h2>We Ship Everywhere in America — and Beyond</h2>
+      <p>Wherever your copier needs to go, our carrier network gets it there — every U.S. state, plus international destinations worldwide.</p>
+    </div>
+    <div class="star-row on-dark" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6L22 9.3l-5 4.9L18.2 22 12 18.3 5.8 22 7 14.2l-5-4.9 7.1-.7L12 2z"/></svg>
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6L22 9.3l-5 4.9L18.2 22 12 18.3 5.8 22 7 14.2l-5-4.9 7.1-.7L12 2z"/></svg>
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6L22 9.3l-5 4.9L18.2 22 12 18.3 5.8 22 7 14.2l-5-4.9 7.1-.7L12 2z"/></svg>
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6L22 9.3l-5 4.9L18.2 22 12 18.3 5.8 22 7 14.2l-5-4.9 7.1-.7L12 2z"/></svg>
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6L22 9.3l-5 4.9L18.2 22 12 18.3 5.8 22 7 14.2l-5-4.9 7.1-.7L12 2z"/></svg>
+    </div>
+    <div class="map-graphic">
+      <svg viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Stylized map of the United States, flag-patterned, with shipping arrows pointing in every direction to represent nationwide and international coverage">
+        <defs>
+          <clipPath id="usaClip">
+            <path d="M150,90 L130,140 L110,190 L95,250 L110,300 L150,340 L230,360 L300,380 L360,395 L400,430 L430,470 L480,455 L520,440 L560,435 L590,440 L620,460 L650,500 L660,540 L680,500 L690,460 L700,430 L710,405 L725,385 L715,365 L720,345 L730,320 L740,300 L750,280 L735,270 L755,255 L770,235 L760,225 L780,205 L790,175 L750,165 L700,160 L650,150 L600,145 L560,155 L520,140 L470,130 L430,120 L350,110 L260,105 L200,100 Z"/>
+          </clipPath>
+          <symbol id="usaStar" viewBox="0 0 20 20">
+            <path d="M10 0 L12.4 6.9 L20 7.3 L14 12 L15.8 19.5 L10 15.3 L4.2 19.5 L6 12 L0 7.3 L7.6 6.9 Z" fill="#ffffff"/>
+          </symbol>
+          <marker id="arrowRed" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="#b22234"/>
+          </marker>
+          <marker id="arrowNavy" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="#14548c"/>
+          </marker>
+          <marker id="arrowGold" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="#f4c430"/>
+          </marker>
+        </defs>
+
+        <!-- Flag-patterned USA map -->
+        <g clip-path="url(#usaClip)">
+          <rect x="0" y="0" width="900" height="560" fill="#ffffff"/>
+          <rect y="0" width="900" height="43.08" fill="#b22234"/>
+          <rect y="86.15" width="900" height="43.08" fill="#b22234"/>
+          <rect y="172.31" width="900" height="43.08" fill="#b22234"/>
+          <rect y="258.46" width="900" height="43.08" fill="#b22234"/>
+          <rect y="344.62" width="900" height="43.08" fill="#b22234"/>
+          <rect y="430.77" width="900" height="43.08" fill="#b22234"/>
+          <rect y="516.92" width="900" height="43.08" fill="#b22234"/>
+          <rect x="0" y="0" width="380" height="301" fill="#0a3161"/>
+          <g>
+            <use href="#usaStar" x="26" y="30" width="18" height="18"/>
+            <use href="#usaStar" x="96" y="30" width="18" height="18"/>
+            <use href="#usaStar" x="166" y="30" width="18" height="18"/>
+            <use href="#usaStar" x="236" y="30" width="18" height="18"/>
+            <use href="#usaStar" x="306" y="30" width="18" height="18"/>
+            <use href="#usaStar" x="61" y="95" width="18" height="18"/>
+            <use href="#usaStar" x="131" y="95" width="18" height="18"/>
+            <use href="#usaStar" x="201" y="95" width="18" height="18"/>
+            <use href="#usaStar" x="271" y="95" width="18" height="18"/>
+            <use href="#usaStar" x="26" y="160" width="18" height="18"/>
+            <use href="#usaStar" x="96" y="160" width="18" height="18"/>
+            <use href="#usaStar" x="166" y="160" width="18" height="18"/>
+            <use href="#usaStar" x="236" y="160" width="18" height="18"/>
+            <use href="#usaStar" x="306" y="160" width="18" height="18"/>
+            <use href="#usaStar" x="61" y="225" width="18" height="18"/>
+            <use href="#usaStar" x="131" y="225" width="18" height="18"/>
+            <use href="#usaStar" x="201" y="225" width="18" height="18"/>
+            <use href="#usaStar" x="271" y="225" width="18" height="18"/>
+          </g>
+        </g>
+        <path d="M150,90 L130,140 L110,190 L95,250 L110,300 L150,340 L230,360 L300,380 L360,395 L400,430 L430,470 L480,455 L520,440 L560,435 L590,440 L620,460 L650,500 L660,540 L680,500 L690,460 L700,430 L710,405 L725,385 L715,365 L720,345 L730,320 L740,300 L750,280 L735,270 L755,255 L770,235 L760,225 L780,205 L790,175 L750,165 L700,160 L650,150 L600,145 L560,155 L520,140 L470,130 L430,120 L350,110 L260,105 L200,100 Z" fill="none" stroke="#08264e" stroke-width="4" stroke-linejoin="round"/>
+
+        <!-- Shipping arrows radiating in every direction -->
+        <g stroke-linecap="round">
+          <line x1="430" y1="290" x2="430" y2="46" stroke="#ffffff" stroke-width="9" opacity=".85"/>
+          <line x1="430" y1="290" x2="430" y2="46" stroke="#b22234" stroke-width="5" marker-end="url(#arrowRed)"/>
+
+          <line x1="430" y1="290" x2="640" y2="90" stroke="#ffffff" stroke-width="9" opacity=".85"/>
+          <line x1="430" y1="290" x2="640" y2="90" stroke="#14548c" stroke-width="5" marker-end="url(#arrowNavy)"/>
+
+          <line x1="430" y1="290" x2="865" y2="290" stroke="#ffffff" stroke-width="9" opacity=".85"/>
+          <line x1="430" y1="290" x2="865" y2="290" stroke="#b22234" stroke-width="5" marker-end="url(#arrowRed)"/>
+
+          <line x1="430" y1="290" x2="655" y2="500" stroke="#ffffff" stroke-width="9" opacity=".85"/>
+          <line x1="430" y1="290" x2="655" y2="500" stroke="#f4c430" stroke-width="5" marker-end="url(#arrowGold)"/>
+
+          <line x1="430" y1="290" x2="430" y2="548" stroke="#ffffff" stroke-width="9" opacity=".85"/>
+          <line x1="430" y1="290" x2="430" y2="548" stroke="#b22234" stroke-width="5" marker-end="url(#arrowRed)"/>
+
+          <line x1="430" y1="290" x2="215" y2="500" stroke="#ffffff" stroke-width="9" opacity=".85"/>
+          <line x1="430" y1="290" x2="215" y2="500" stroke="#14548c" stroke-width="5" marker-end="url(#arrowNavy)"/>
+
+          <line x1="430" y1="290" x2="35" y2="290" stroke="#ffffff" stroke-width="9" opacity=".85"/>
+          <line x1="430" y1="290" x2="35" y2="290" stroke="#b22234" stroke-width="5" marker-end="url(#arrowRed)"/>
+
+          <line x1="430" y1="290" x2="215" y2="80" stroke="#ffffff" stroke-width="9" opacity=".85"/>
+          <line x1="430" y1="290" x2="215" y2="80" stroke="#14548c" stroke-width="5" marker-end="url(#arrowNavy)"/>
+        </g>
+      </svg>
+    </div>
+    <div class="map-chips">
+      <span class="map-chip"><span class="dot-red"></span> All 50 States</span>
+      <span class="map-chip"><span class="dot-red"></span> Coast to Coast</span>
+      <span class="map-chip"><span class="dot-red"></span> Door-to-Door</span>
+      <span class="map-chip"><span class="dot-red"></span> International Shipping</span>
+    </div>
   </div>
 </section>
 
