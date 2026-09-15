@@ -32,8 +32,12 @@ module.exports = async (req, res) => {
 
   const name = (body.name || '').toString().trim();
   const phone = (body.phone || '').toString().trim();
-  const route = (body.route || '').toString().trim();
+  const fromZip = (body.fromZip || '').toString().trim();
+  const toZip = (body.toZip || '').toString().trim();
+  const weight = (body.weight || '').toString().trim();
+  const dimensions = (body.dimensions || '').toString().trim();
   const details = (body.details || '').toString().trim();
+  const comments = (body.comments || '').toString().trim();
 
   if (!name || !phone) {
     res.status(400).json({ error: 'Name and phone are required.' });
@@ -43,8 +47,10 @@ module.exports = async (req, res) => {
   const apiKey = process.env.RESEND_API_KEY;
 
   if (!apiKey) {
+    // No email service configured yet — accept the lead so the site keeps
+    // working, and log it so it's visible in Vercel's function logs.
     console.log('New quote request (RESEND_API_KEY not set):', {
-      name, phone, route, details, receivedAt: new Date().toISOString()
+      name, phone, fromZip, toZip, weight, dimensions, details, comments, receivedAt: new Date().toISOString()
     });
     res.status(200).json({
       ok: true,
@@ -71,8 +77,12 @@ module.exports = async (req, res) => {
           '',
           'Name: ' + name,
           'Phone: ' + phone,
-          'Route (Pickup -> Delivery ZIP): ' + (route || 'N/A'),
-          'Equipment Details: ' + (details || 'N/A')
+          'From ZIP: ' + (fromZip || 'N/A'),
+          'To ZIP: ' + (toZip || 'N/A'),
+          'Weight: ' + (weight || 'N/A'),
+          'Dimensions: ' + (dimensions || 'N/A'),
+          'Equipment Details: ' + (details || 'N/A'),
+          'Additional Comments: ' + (comments || 'N/A')
         ].join('\n')
       })
     });
