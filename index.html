@@ -169,6 +169,8 @@
   .hero-card h3{font-size:1.2rem;margin-bottom:6px;color:var(--navy);}
   .hero-card p.sub{color:var(--muted);font-size:.9rem;margin-bottom:18px;}
   .field{margin-bottom:14px;}
+  .field-row{display:flex;gap:10px;}
+  .field-row .field{flex:1;min-width:0;}
   .field label{display:block;font-size:.85rem;font-weight:600;margin-bottom:6px;color:var(--navy);}
   .field input, .field select, .field textarea{
     width:100%;
@@ -382,13 +384,33 @@
           <label>Phone Number</label>
           <input type="tel" name="phone" placeholder="(555) 555-5555" required>
         </div>
-        <div class="field">
-          <label>Pickup Location &rarr; Delivery Location</label>
-          <input type="text" name="route" placeholder="e.g. 23234 to 30301, or city/country for international" required>
+        <div class="field-row">
+          <div class="field">
+            <label>From ZIP Code</label>
+            <input type="text" name="fromZip" placeholder="e.g. 23234" required>
+          </div>
+          <div class="field">
+            <label>To ZIP Code</label>
+            <input type="text" name="toZip" placeholder="e.g. 30301 (or city/country)" required>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>Weight</label>
+            <input type="text" name="weight" placeholder="e.g. 350 lbs">
+          </div>
+          <div class="field">
+            <label>Dimensions (L x W x H)</label>
+            <input type="text" name="dimensions" placeholder='e.g. 40" x 35" x 45"'>
+          </div>
         </div>
         <div class="field">
           <label>Equipment Details</label>
-          <textarea name="details" placeholder="Copier make/model, quantity, size... (mention if this is a quarterly lease return)"></textarea>
+          <textarea name="details" placeholder="Copier make/model, quantity... (mention if this is a quarterly lease return)"></textarea>
+        </div>
+        <div class="field">
+          <label>Additional Comments</label>
+          <textarea name="comments" placeholder="Anything else we should know (loading dock access, timing, special instructions)..."></textarea>
         </div>
         <button type="submit" class="btn btn-primary" id="quoteSubmitBtn">Request Quote</button>
         <p id="quoteStatus" role="status" style="margin-top:12px;font-size:.88rem;font-weight:600;"></p>
