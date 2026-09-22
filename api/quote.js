@@ -38,6 +38,8 @@ module.exports = async (req, res) => {
 
   const name = (body.name || '').toString().trim();
   const phone = (body.phone || '').toString().trim();
+  const email = (body.email || '').toString().trim();
+  const equipmentType = (body.equipmentType || '').toString().trim();
   const fromZip = (body.fromZip || '').toString().trim();
   const toZip = (body.toZip || '').toString().trim();
   const weight = (body.weight || '').toString().trim();
@@ -57,7 +59,7 @@ module.exports = async (req, res) => {
     // No email service configured yet — accept the lead so the site keeps
     // working, and log it so it's visible in Vercel's function logs.
     console.log('New quote request (SENDGRID_API_KEY/SENDGRID_FROM_EMAIL not set):', {
-      name, phone, fromZip, toZip, weight, dimensions, details, comments, receivedAt: new Date().toISOString()
+      name, phone, email, equipmentType, fromZip, toZip, weight, dimensions, details, comments, receivedAt: new Date().toISOString()
     });
     res.status(200).json({
       ok: true,
@@ -71,6 +73,8 @@ module.exports = async (req, res) => {
     '',
     'Name: ' + name,
     'Phone: ' + phone,
+    'Email: ' + (email || 'N/A'),
+    'Shipping: ' + (equipmentType || 'N/A'),
     'From ZIP: ' + (fromZip || 'N/A'),
     'To ZIP: ' + (toZip || 'N/A'),
     'Weight: ' + (weight || 'N/A'),
@@ -89,7 +93,7 @@ module.exports = async (req, res) => {
       body: JSON.stringify({
         personalizations: [{ to: [{ email: TO_EMAIL }] }],
         from: { email: fromEmail, name: 'USA Copier Movers Website' },
-        reply_to: { email: fromEmail },
+        reply_to: { email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? email : fromEmail },
         subject: 'New Copier Shipping Quote Request - ' + name,
         content: [{ type: 'text/plain', value: emailBody }]
       })
