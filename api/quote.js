@@ -68,6 +68,12 @@ module.exports = async (req, res) => {
     return;
   }
 
+  // Extra recipients (comma-separated) from the LEAD_EMAIL env var.
+  const recipients = [{ email: TO_EMAIL }];
+  (process.env.LEAD_EMAIL || '').split(',').map(function (e) { return e.trim(); })
+    .filter(function (e) { return e && e.toLowerCase() !== TO_EMAIL.toLowerCase(); })
+    .forEach(function (e) { recipients.push({ email: e }); });
+
   const emailBody = [
     'New quote request from usacopiermovers.com',
     '',
@@ -91,7 +97,7 @@ module.exports = async (req, res) => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        personalizations: [{ to: [{ email: TO_EMAIL }] }],
+        personalizations: [{ to: recipients }],
         from: { email: fromEmail, name: 'USA Copier Movers Website' },
         reply_to: { email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? email : fromEmail },
         subject: 'New Copier Shipping Quote Request - ' + name,
