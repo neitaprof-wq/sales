@@ -50,6 +50,21 @@ const blogPosts: BlogPost[] = [
       "My biggest piece of advice for other kids getting ready for auditions: be prepared, be yourself, and remember that every audition — no matter the outcome — makes you a stronger performer for the next one.",
     ],
   },
+  {
+    slug: "my-audition-journey-since-age-8",
+    title: "My Audition Journey: Starting at Age 8",
+    date: "2025-04-18",
+    excerpt:
+      "I booked my very first audition when I was only 8 years old. Here's my story of how I got started and everything I've learned about audition prep along the way.",
+    content: [
+      "I was 8 years old the very first time I walked into an audition room, and I still remember exactly how it felt — my hands were shaky, my heart was pounding, and I kept whispering my lines to myself in the waiting area just to make sure I wouldn't forget them.",
+      "Back then, I didn't really know what to expect. My mom explained that an audition is basically just a chance to show a casting director what I could do, not a test with a pass or fail grade. That helped a little, but I was still so nervous I could barely eat breakfast that morning!",
+      "My first audition prep routine was pretty simple: practice my lines in the mirror, pick out a comfy outfit, and have my mom quiz me in the car on the way there. I didn't book that first role, but I learned so much just from being in the room and trying.",
+      "As I kept going to more auditions, I started figuring out what actually helped me do my best. Reading the sides out loud instead of just in my head made the words feel more natural. Thinking about how my character was feeling, instead of just memorizing words, made my acting feel more real too.",
+      "One of the biggest lessons from being an 8-year-old at my very first audition to where I am now is that confidence grows with practice, not perfection. Every single audition — the ones I booked and the ones I didn't — taught me something new about being prepared, staying calm, and trusting myself.",
+      "If there's one thing I'd tell any kid starting their own audition journey, it's this: the nerves never fully go away, and that's okay! What matters is walking in prepared, being yourself, and remembering that just getting the chance to audition is already something to be proud of.",
+    ],
+  },
 ]
 
 export function getAllPosts(): BlogPost[] {
