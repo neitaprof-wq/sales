@@ -46,6 +46,10 @@ module.exports = async (req, res) => {
   const dimensions = (body.dimensions || '').toString().trim();
   const details = (body.details || '').toString().trim();
   const comments = (body.comments || '').toString().trim();
+  // Photos arrive already shrunk on the customer's phone (base64 JPEG).
+  const photos = (Array.isArray(body.photos) ? body.photos : [])
+    .filter(function (p) { return p && typeof p.data === 'string' && p.data.length > 0 && p.data.length < 3000000; })
+    .slice(0, 6);
 
   if (!name || !phone) {
     res.status(400).json({ error: 'Name and phone are required.' });
@@ -86,7 +90,8 @@ module.exports = async (req, res) => {
     'Weight: ' + (weight || 'N/A'),
     'Dimensions: ' + (dimensions || 'N/A'),
     'Equipment Details: ' + (details || 'N/A'),
-    'Additional Comments: ' + (comments || 'N/A')
+    'Additional Comments: ' + (comments || 'N/A'),
+    'Photos: ' + (photos.length ? photos.length + ' attached' : 'None')
   ].join('\n');
 
   try {
@@ -101,7 +106,12 @@ module.exports = async (req, res) => {
         from: { email: fromEmail, name: 'USA Copier Movers Website' },
         reply_to: { email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? email : fromEmail },
         subject: 'New Copier Shipping Quote Request - ' + name,
-        content: [{ type: 'text/plain', value: emailBody }]
+        content: [{ type: 'text/plain', value: emailBody }],
+        ...(photos.length ? {
+          attachments: photos.map(function (p, i) {
+            return { content: p.data, filename: 'copier-photo-' + (i + 1) + '.jpg', type: 'image/jpeg', disposition: 'attachment' };
+          })
+        } : {})
       })
     });
 
