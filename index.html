@@ -653,9 +653,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <input type="tel" id="q-phone" name="phone" placeholder="(555) 555-5555" autocomplete="tel" required>
           </div>
         </div>
-        <div class="field">
-          <label for="q-email">Email <span class="opt">(optional)</span></label>
-          <input type="email" id="q-email" name="email" placeholder="you@company.com" autocomplete="email">
+        <div class="field-row">
+          <div class="field">
+            <label for="q-company">Company <span class="opt">(optional)</span></label>
+            <input type="text" id="q-company" name="company" placeholder="Company name" autocomplete="organization">
+          </div>
+          <div class="field">
+            <label for="q-email">Email <span class="opt">(optional)</span></label>
+            <input type="email" id="q-email" name="email" placeholder="you@company.com" autocomplete="email">
+          </div>
         </div>
         <div class="field-row">
           <div class="field">
@@ -666,6 +672,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <label for="q-to">To ZIP / City / Country</label>
             <input type="text" id="q-to" name="toZip" placeholder="e.g. 30301" required>
           </div>
+        </div>
+        <div class="field">
+          <label for="q-shiptype">Domestic or International?</label>
+          <select id="q-shiptype" name="shipType">
+            <option value="Domestic">Domestic (within the U.S.)</option>
+            <option value="International">International</option>
+          </select>
         </div>
         <div class="field">
           <label for="q-type">What are you shipping?</label>
