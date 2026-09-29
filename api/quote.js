@@ -48,6 +48,7 @@ module.exports = async (req, res) => {
   const comments = (body.comments || '').toString().trim();
   const company = (body.company || '').toString().trim();
   const shipType = (body.shipType || '').toString().trim();
+  const requestedDate = (body.requestedDate || '').toString().trim();
   // Photos arrive already shrunk on the customer's phone (base64 JPEG).
   const photos = (Array.isArray(body.photos) ? body.photos : [])
     .filter(function (p) { return p && typeof p.data === 'string' && p.data.length > 0 && p.data.length < 3000000; })
@@ -91,6 +92,7 @@ module.exports = async (req, res) => {
     'From ZIP: ' + (fromZip || 'N/A'),
     'To ZIP: ' + (toZip || 'N/A'),
     'Domestic or International: ' + (shipType || 'N/A'),
+    'Requested Pickup Date: ' + (requestedDate || 'N/A'),
     'Weight: ' + (weight || 'N/A'),
     'Dimensions: ' + (dimensions || 'N/A'),
     'Equipment Details: ' + (details || 'N/A'),
