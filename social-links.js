@@ -69,9 +69,59 @@
     else (article.querySelector(":scope > div") || article).appendChild(line);
   }
 
+  var floatingStyles =
+    ".fb-float{position:fixed;left:24px;bottom:24px;z-index:90;display:flex;flex-direction:column;align-items:center;gap:6px;text-decoration:none;}" +
+    ".fb-float-circle{position:relative;width:60px;height:60px;border-radius:50%;background:#1877F2;color:#fff;display:flex;align-items:center;justify-content:center;border:2px solid #fff;box-shadow:0 6px 18px rgba(0,0,0,.28);transition:transform .2s ease;}" +
+    ".fb-float-circle::before{content:'';position:absolute;inset:-2px;border-radius:50%;background:#1877F2;z-index:-1;animation:fb-float-pulse 2.4s ease-out infinite;}" +
+    ".fb-float-circle svg{width:30px;height:30px;fill:currentColor;display:block;}" +
+    ".fb-float-label{background:#1877F2;color:#fff;font-size:12px;font-weight:700;line-height:1;padding:5px 10px;border-radius:999px;box-shadow:0 2px 8px rgba(0,0,0,.2);white-space:nowrap;}" +
+    ".fb-float:hover .fb-float-circle,.fb-float:focus-visible .fb-float-circle{transform:scale(1.06);}" +
+    ".fb-float:focus-visible{outline:3px solid #1877F2;outline-offset:4px;border-radius:12px;}" +
+    "@keyframes fb-float-pulse{0%{transform:scale(1);opacity:.55;}80%,100%{transform:scale(1.6);opacity:0;}}" +
+    "@media (max-width:860px){.fb-float{left:16px;bottom:80px;}}" +
+    "@media (prefers-reduced-motion:reduce){.fb-float-circle::before{animation:none;opacity:0;}.fb-float-circle{transition:none;}}";
+
+  function clearBottomLeftBars(button) {
+    var bars = document.querySelectorAll(".mobile-bar");
+    var offset = 0;
+    bars.forEach(function (bar) {
+      var style = getComputedStyle(bar);
+      if (style.display === "none" || style.position !== "fixed") return;
+      offset = Math.max(offset, bar.getBoundingClientRect().height);
+    });
+    button.style.bottom = offset ? Math.max(80, offset + 24) + "px" : "";
+  }
+
+  function addFloatingButton() {
+    if (document.querySelector("[data-facebook-float]")) return;
+    var style = document.createElement("style");
+    style.textContent = floatingStyles;
+    document.head.appendChild(style);
+
+    var button = document.createElement("a");
+    button.className = "fb-float";
+    button.setAttribute("data-facebook-float", "");
+    button.href = facebookUrl;
+    button.target = "_blank";
+    button.rel = "noopener noreferrer";
+    button.setAttribute("aria-label", "USA Copier Movers on Facebook");
+    button.innerHTML =
+      '<span class="fb-float-circle" aria-hidden="true">' +
+      '<svg viewBox="0 0 24 24" focusable="false"><path d="M15.12 5.32H17V2.14A26.11 26.11 0 0 0 14.26 2c-2.72 0-4.58 1.66-4.58 4.7v2.62H6.61v3.56h3.07V22h3.68v-9.12h3.06l.46-3.56h-3.52V7.05c0-1.03.28-1.73 1.76-1.73z"/></svg>' +
+      "</span>" +
+      '<span class="fb-float-label" aria-hidden="true">Follow us</span>';
+    document.body.appendChild(button);
+
+    clearBottomLeftBars(button);
+    window.addEventListener("resize", function () {
+      clearBottomLeftBars(button);
+    });
+  }
+
   function init() {
     addFooterLink();
     addBlogPostLine();
+    addFloatingButton();
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
