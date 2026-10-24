@@ -19,7 +19,9 @@
 // still accepted (so the form never breaks for site visitors) and are
 // written to the function logs instead of emailed.
 
-const TO_EMAIL = 'copierleasereturn@highvalueproductshipping.com';
+const sendAutoReply = require('./_autoreply');
+
+const TO_EMAIL ='copierleasereturn@highvalueproductshipping.com';
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') {
@@ -126,6 +128,17 @@ module.exports = async (req, res) => {
       console.error('SendGrid API error:', emailRes.status, errText);
       res.status(502).json({ error: 'Could not send email right now. Please call (866) 216-7742.' });
       return;
+    }
+
+    // Claude-written acknowledgment to the customer (only if ANTHROPIC_API_KEY is set).
+    try {
+      await sendAutoReply({
+        name, email, company, equipmentType, fromZip, toZip, shipType,
+        requestedDate, weight, dimensions, details, comments,
+        photoCount: photos.length
+      }, apiKey, fromEmail);
+    } catch (err) {
+      console.error('Auto-reply failed:', err);
     }
 
     res.status(200).json({ ok: true });
