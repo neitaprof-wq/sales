@@ -20,6 +20,7 @@
 // written to the function logs instead of emailed.
 
 const sendAutoReply = require('./_autoreply');
+const quotePrep = require('./_quoteprep');
 
 const TO_EMAIL ='copierleasereturn@highvalueproductshipping.com';
 
@@ -83,7 +84,23 @@ module.exports = async (req, res) => {
     .filter(function (e) { return e && e.toLowerCase() !== TO_EMAIL.toLowerCase(); })
     .forEach(function (e) { recipients.push({ email: e }); });
 
-  const emailBody = [
+  // Claude quote-prep notes for Andre (internal only). Empty string if unavailable.
+  let prep = '';
+  try {
+    prep = await quotePrep({
+      name, company, equipmentType, details, fromZip, toZip, shipType,
+      requestedDate, weight, dimensions, comments
+    }, photos);
+  } catch (err) {
+    console.error('Quote prep error:', err);
+  }
+
+  const emailBody = (prep ? [
+    '==== QUOTE PREP (Claude, estimates only - verify) ====',
+    prep,
+    '======================================================',
+    ''
+  ] : []).concat([
     'New quote request from usacopiermovers.com',
     '',
     'Name: ' + name,
@@ -100,7 +117,7 @@ module.exports = async (req, res) => {
     'Equipment Details: ' + (details || 'N/A'),
     'Additional Comments: ' + (comments || 'N/A'),
     'Photos: ' + (photos.length ? photos.length + ' attached' : 'None')
-  ].join('\n');
+  ]).join('\n');
 
   try {
     const emailRes = await fetch('https://api.sendgrid.com/v3/mail/send', {
