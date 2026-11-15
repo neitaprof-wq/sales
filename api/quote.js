@@ -1,6 +1,7 @@
 // Vercel Serverless Function: /api/quote
 // Receives quote-request submissions from the site's form and emails them
-// to the lease-return / quotes inbox via the SendGrid API.
+// to the lease-return / quotes inbox via Resend (RESEND_API_KEY), falling
+// back to SendGrid if Resend isn't configured. See api/_mail.js.
 //
 // Setup required (one-time, done in your own SendGrid + Vercel dashboards):
 //   1. Create a free account at https://sendgrid.com
@@ -20,6 +21,7 @@
 // written to the function logs instead of emailed.
 
 const sendAutoReply = require('./_autoreply');
+const sendMail = require('./_mail');
 const quotePrep = require('./_quoteprep');
 
 const TO_EMAIL ='copierleasereturn@highvalueproductshipping.com';
@@ -62,13 +64,10 @@ module.exports = async (req, res) => {
     return;
   }
 
-  const apiKey = process.env.SENDGRID_API_KEY;
-  const fromEmail = process.env.SENDGRID_FROM_EMAIL;
-
-  if (!apiKey || !fromEmail) {
+  if (!sendMail.hasProvider()) {
     // No email service configured yet — accept the lead so the site keeps
     // working, and log it so it's visible in Vercel's function logs.
-    console.log('New quote request (SENDGRID_API_KEY/SENDGRID_FROM_EMAIL not set):', {
+    console.log('New quote request (no email provider configured):', {
       name, phone, email, equipmentType, fromZip, toZip, weight, dimensions, details, comments, receivedAt: new Date().toISOString()
     });
     res.status(200).json({
@@ -79,10 +78,10 @@ module.exports = async (req, res) => {
   }
 
   // Extra recipients (comma-separated) from the LEAD_EMAIL env var.
-  const recipients = [{ email: TO_EMAIL }];
+  const recipients = [TO_EMAIL];
   (process.env.LEAD_EMAIL || '').split(',').map(function (e) { return e.trim(); })
     .filter(function (e) { return e && e.toLowerCase() !== TO_EMAIL.toLowerCase(); })
-    .forEach(function (e) { recipients.push({ email: e }); });
+    .forEach(function (e) { recipients.push(e); });
 
   // Claude quote-prep notes for Andre (internal only). Empty string if unavailable.
   let prep = '';
@@ -120,29 +119,19 @@ module.exports = async (req, res) => {
   ]).join('\n');
 
   try {
-    const emailRes = await fetch('https://api.sendgrid.com/v3/mail/send', {
-      method: 'POST',
-      headers: {
-        Authorization: 'Bearer ' + apiKey,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        personalizations: [{ to: recipients }],
-        from: { email: fromEmail, name: 'USA Copier Movers Website' },
-        reply_to: { email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? email : fromEmail },
-        subject: 'New Copier Shipping Quote Request - ' + name,
-        content: [{ type: 'text/plain', value: emailBody }],
-        ...(photos.length ? {
-          attachments: photos.map(function (p, i) {
-            return { content: p.data, filename: 'copier-photo-' + (i + 1) + '.jpg', type: 'image/jpeg', disposition: 'attachment' };
-          })
-        } : {})
+    const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    const sent = await sendMail({
+      to: recipients,
+      fromName: 'USA Copier Movers Website',
+      replyTo: validEmail ? email : undefined,
+      subject: 'New Copier Shipping Quote Request - ' + name,
+      text: emailBody,
+      attachments: photos.map(function (p, i) {
+        return { content: p.data, filename: 'copier-photo-' + (i + 1) + '.jpg', type: 'image/jpeg' };
       })
     });
 
-    if (!emailRes.ok) {
-      const errText = await emailRes.text();
-      console.error('SendGrid API error:', emailRes.status, errText);
+    if (!sent.ok) {
       res.status(502).json({ error: 'Could not send email right now. Please call (866) 216-7742.' });
       return;
     }
@@ -153,7 +142,7 @@ module.exports = async (req, res) => {
         name, email, company, equipmentType, fromZip, toZip, shipType,
         requestedDate, weight, dimensions, details, comments,
         photoCount: photos.length
-      }, apiKey, fromEmail);
+      });
     } catch (err) {
       console.error('Auto-reply failed:', err);
     }

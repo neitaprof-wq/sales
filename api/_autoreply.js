@@ -125,7 +125,9 @@ function buildHtml(firstName, bodyText) {
     '</td></tr></table></td></tr></table></body></html>';
 }
 
-module.exports = async function sendAutoReply(lead, sendgridKey, fromEmail) {
+const sendMail = require('./_mail');
+
+module.exports = async function sendAutoReply(lead) {
   const anthropicKey = process.env.ANTHROPIC_API_KEY;
   if (!anthropicKey) return;
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(lead.email || '')) return;
@@ -136,24 +138,17 @@ module.exports = async function sendAutoReply(lead, sendgridKey, fromEmail) {
     '\n\nNeed to add details or photos? Use our quote form:\n' + QUOTE_URL +
     '\n\nOr call us 24/7 at ' + PHONE + '.\n\nThank you,\nUSA Copier Movers\n' + PHONE + '\n' + SITE;
 
-  const personalization = { to: [{ email: lead.email }] };
-  if (lead.email.toLowerCase() !== COPY_TO) personalization.bcc = [{ email: COPY_TO }];
-
-  const r = await fetch('https://api.sendgrid.com/v3/mail/send', {
-    method: 'POST',
-    headers: { Authorization: 'Bearer ' + sendgridKey, 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      personalizations: [personalization],
-      from: { email: fromEmail, name: 'USA Copier Movers' },
-      reply_to: { email: COPY_TO, name: 'USA Copier Movers' },
-      subject: 'We received your copier shipping request',
-      content: [
-        { type: 'text/plain', value: text },
-        { type: 'text/html', value: buildHtml(firstName, body) }
-      ]
-    })
+  const bcc = lead.email.toLowerCase() !== COPY_TO ? [COPY_TO] : [];
+  const r = await sendMail({
+    to: [lead.email],
+    bcc: bcc,
+    fromName: 'USA Copier Movers',
+    replyTo: COPY_TO,
+    subject: 'We received your copier shipping request',
+    text: text,
+    html: buildHtml(firstName, body)
   });
-  if (!r.ok) console.error('Auto-reply SendGrid error:', r.status, await r.text());
+  if (!r.ok) console.error('Auto-reply send error:', r.provider, r.status, r.error);
 };
 
 module.exports.buildHtml = buildHtml;
