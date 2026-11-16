@@ -1,5 +1,53 @@
 {
   "functions": {
-    "api/quote.js": { "maxDuration": 60 }
-  }
+    "api/quote.js": {
+      "maxDuration": 60
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/copier-movers-richmond-va",
+      "destination": "/copier-movers-richmond-va.html"
+    },
+    {
+      "source": "/copier-moving-virginia-beach",
+      "destination": "/copier-moving-virginia-beach.html"
+    },
+    {
+      "source": "/copier-movers-washington-dc",
+      "destination": "/copier-movers-washington-dc.html"
+    },
+    {
+      "source": "/copier-movers-baltimore-md",
+      "destination": "/copier-movers-baltimore-md.html"
+    },
+    {
+      "source": "/copier-lease-return-shipping",
+      "destination": "/copier-lease-return-shipping.html"
+    },
+    {
+      "source": "/office-copier-relocation",
+      "destination": "/office-copier-relocation.html"
+    },
+    {
+      "source": "/large-format-printer-moving",
+      "destination": "/large-format-printer-moving.html"
+    },
+    {
+      "source": "/multifunction-printer-delivery-installation",
+      "destination": "/multifunction-printer-delivery-installation.html"
+    },
+    {
+      "source": "/copier-shipping-cost",
+      "destination": "/copier-shipping-cost.html"
+    },
+    {
+      "source": "/copier-freight-shipping-nationwide",
+      "destination": "/copier-freight-shipping-nationwide.html"
+    },
+    {
+      "source": "/dealer-copier-delivery-services",
+      "destination": "/dealer-copier-delivery-services.html"
+    }
+  ]
 }
