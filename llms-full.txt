@@ -17,7 +17,7 @@ Quote page: https://www.usacopiermovers.com/#quote
 ## About
 
 ### About USA Copier Movers
-URL: https://www.usacopiermovers.com/about
+URL: https://www.usacopiermovers.com/about.html
 Updated: 2026-11-18
 
 USA Copier Movers moves and ships copiers, MFPs, printers and other office equipment for businesses, schools, dealers and leasing companies. We are based at 2208 Station Rd in North Chesterfield, Virginia, serve the I-95 corridor directly, and ship to and from all 50 states. Call (866) 216-7742 or request a free quote.
@@ -1005,7 +1005,7 @@ A: We ship copiers in all 50 states and are local copier movers in Virginia, Was
 
 # All public page URLs
 - https://www.usacopiermovers.com/#quote
-- https://www.usacopiermovers.com/about
+- https://www.usacopiermovers.com/about.html
 - https://www.usacopiermovers.com/canon-copier-shipping.html
 - https://www.usacopiermovers.com/copier-freight-shipping-nationwide
 - https://www.usacopiermovers.com/copier-lease-return-shipping
